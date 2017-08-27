@@ -12,7 +12,6 @@ RUN /usr/local/letsencrypt-auto -h
 
 COPY ./entrypoint.sh        /usr/local/entrypoint.sh
 COPY ./letsencryptcron.conf /usr/local/letsencryptcron.conf
-COPY ./nginx.conf           /etc/nginx/nginx.conf
 COPY ./letsencrypt.sh       /usr/local/letsencrypt.sh
 
 RUN chmod +x /usr/local/entrypoint.sh
