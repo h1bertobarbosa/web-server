@@ -2,7 +2,7 @@ FROM php:5.6-fpm
 MAINTAINER Humberto Barbosa <humberto.obarbosa@gmail.com>
 
 RUN apt-get update && apt-get upgrade -y
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get install -y --force-yes libssl-dev curl  libcurl4-gnutls-dev libxml2-dev libicu-dev libmcrypt-dev  libmemcached11 libmemcached-dev curl
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get install -y --force-yes libssl-dev curl  libcurl4-gnutls-dev libxml2-dev libicu-dev libmcrypt-dev  libmemcached11 libmemcached-dev
 
 RUN apt-get install -y libmcrypt-dev
 RUN apt-get install -y libpq-dev
@@ -28,7 +28,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN docker-php-ext-install gd
 
 ### INSTALL COMPOSER
-  curl -sS https://getcomposer.org/installer | php && \
+RUN curl -sS https://getcomposer.org/installer | php && \
   mv composer.phar /usr/local/bin/composer && \
   chmod +x /usr/local/bin/composer && \
   composer self-update && \
