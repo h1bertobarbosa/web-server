@@ -11,7 +11,7 @@ services:
       - $PWD/db/mysql:/var/lib/mysql
     networks:
       intranet:
-        ipv4_address: 200.4.75.1
+        ipv4_address: 200.4.75.4
 
   php56:
     build: PHP56fpm
@@ -22,7 +22,7 @@ services:
       - $PWD/config/php.ini:/usr/local/etc/php/php.ini
       - $PWD/apps:/var/www
     extra_hosts:
-      - "mysql:200.4.75.1"
+      - "mysql:200.4.75.4"
     networks:
       intranet:
         ipv4_address: 200.4.75.2
