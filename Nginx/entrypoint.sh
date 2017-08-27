@@ -13,4 +13,6 @@ else
   echo -e "URL=\"$URL\"" > /root/domains.conf
 fi
 
+/usr/local/letsencrypt.sh
+
 exec "$@"

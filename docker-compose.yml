@@ -1,6 +1,18 @@
 version: '2'
 
 services:
+  mysql:
+    image: mysql:5.6
+    ports:
+      - 3304:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=asdkasldkasl
+    volumes:
+      - $PWD/db/mysql:/var/lib/mysql
+    networks:
+      intranet:
+        ipv4_address: 200.4.75.1
+
   php56:
     build: PHP56fpm
     hostname: "php"
@@ -9,6 +21,8 @@ services:
     volumes:
       - $PWD/config/php.ini:/usr/local/etc/php/php.ini
       - $PWD/apps:/var/www
+    extra_hosts:
+      - "mysql:200.4.75.1"
     networks:
       intranet:
         ipv4_address: 200.4.75.2
@@ -30,6 +44,7 @@ services:
       - $PWD/config/nginx.conf:/etc/nginx/nginx.conf:ro
       - $PWD/config/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
       - $PWD/apps:/var/www
+      - $PWD/Nginx/letsencrypt:/etc/letsencrypt:rw
     networks:
       intranet:
         ipv4_address: 200.4.75.3

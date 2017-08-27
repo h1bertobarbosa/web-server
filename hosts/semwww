@@ -1,0 +1,7 @@
+server {
+  listen 80;
+  listen 443 ssl;
+
+  server_name www.h1bertobarbosa.com.br;
+  rewrite ^(.*) https://h1bertobarbosa.com.br$1 permanent;
+}
