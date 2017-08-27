@@ -1,0 +1,5 @@
+server {
+  listen 80 h1bertobarbosa.com.br blog.h1bertobarbosa.com.br;
+  listen [::]:80 h1bertobarbosa.com.br blog.h1bertobarbosa.com.br;
+  return 301 https://$host$request_uri;
+}

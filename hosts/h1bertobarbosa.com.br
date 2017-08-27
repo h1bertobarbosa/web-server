@@ -1,0 +1,31 @@
+server   {
+   server_name www.h1bertobarbosa.com.br;
+   rewrite  ^/(.*)$  https://h1bertobarbosa.com.br/$1 permanent;
+}
+
+server {
+    listen 443 ssl;
+    server_name h1bertobarbosa.com.br;
+
+    ssl_certificate     /etc/letsencrypt/live/h1bertobarbosa.com.br/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/h1bertobarbosa.com.br/privkey.pem;
+    ssl_dhparam         /etc/ssl/certs/dhparam.pem;
+    ssl_ciphers 'EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH';
+    ssl_prefer_server_ciphers on;
+
+    root /var/www/h1bertobarbosa.com.br;
+    index index.php index.html index.htm;
+
+    location / {
+         try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php56:9000;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+    include /etc/nginx/static_files.conf;
+}
