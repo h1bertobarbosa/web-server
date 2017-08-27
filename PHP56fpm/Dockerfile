@@ -2,7 +2,7 @@ FROM php:5.6-fpm
 MAINTAINER Humberto Barbosa <humberto.obarbosa@gmail.com>
 
 RUN apt-get update && apt-get upgrade -y
-RUN export DEBIAN_FRONTEND=noninteractive && apt-get install -y --force-yes libssl-dev curl  libcurl4-gnutls-dev libxml2-dev libicu-dev libmcrypt-dev  libmemcached11 libmemcached-dev
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get install -y --force-yes libssl-dev curl  libcurl4-gnutls-dev libxml2-dev libicu-dev libmcrypt-dev  libmemcached11 libmemcached-dev curl
 
 RUN apt-get install -y libmcrypt-dev
 RUN apt-get install -y libpq-dev
