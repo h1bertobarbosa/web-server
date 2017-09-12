@@ -3,8 +3,9 @@ version: '2'
 services:
   mysql:
     image: mysql:5.6
+    container_name: webserver-mysql
     ports:
-      - 3304:3306
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=asdkasldkasl
     volumes:
@@ -13,24 +14,38 @@ services:
       intranet:
         ipv4_address: 200.4.75.4
 
-  php56:
-    build: PHP56fpm
-    hostname: "php"
+  # php56:
+  #   build: PHP56fpm
+  #   hostname: "php"
+  #   working_dir: /var/www
+  #   container_name: PHP56fpm
+  #   volumes:
+  #     - $PWD/PHP56fpm/php.ini:/usr/local/etc/php/php.ini
+  #     - $PWD/apps:/var/www
+  #   extra_hosts:
+  #     - "mysql:200.4.75.4"
+  #   networks:
+  #     intranet:
+  #       ipv4_address: 200.4.75.2
+
+  php71:
+    build: PHP71fpm
+    hostname: "php71"
     working_dir: /var/www
-    container_name: PHP56fpm
+    container_name: webserver-php71
     volumes:
-      - $PWD/config/php.ini:/usr/local/etc/php/php.ini
-      - $PWD/apps:/var/www
+      - $PWD/PHP71fpm/php.ini:/usr/local/etc/php/php.ini:ro
+      - $PWD/apps:/var/www:rw
     extra_hosts:
       - "mysql:200.4.75.4"
     networks:
       intranet:
-        ipv4_address: 200.4.75.2
+        ipv4_address: 200.4.75.5
 
   nginx:
     build: Nginx
     hostname: web-nginx
-    container_name: Nginx
+    container_name: webserver-nginx
     environment:
       - EMAIL=humberto.obarbosa@gmail.com
       - SUBDOMAINS=h1bertobarbosa.com.br,blog.h1bertobarbosa.com.br
@@ -38,11 +53,11 @@ services:
       - "80:80"
       - "443:443"
     extra_hosts:
-      - "php56:200.4.75.2"
+      - "php71:200.4.75.5"
     volumes:
       - $PWD/hosts:/etc/nginx/conf.d:ro
-      - $PWD/config/nginx.conf:/etc/nginx/nginx.conf:ro
-      - $PWD/config/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
+      - $PWD/Nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - $PWD/Nginx/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
       - $PWD/apps:/var/www
       - $PWD/Nginx/letsencrypt:/etc/letsencrypt:rw
     networks:
